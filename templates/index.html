@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TextifyAI - Smart Study Notes Generator</title>
+  <meta name="description" content="Turn long text into clear, concise insights using pre-trained Generative AI. College Mini Project for MCA Generative AI, SRM IST.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <!-- Background Glow Accents -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Header Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Textify<span class="gradient-text">AI</span></span>
+          <span class="brand-badge">Mini Project</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="/slides" class="btn btn-secondary btn-sm" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          5-Slide PPT Deck
+        </a>
+        <a href="#about" class="nav-link">About Project</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="main-wrapper">
+    <section class="hero-section container">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Pre-trained Generative AI Model: <code>facebook/bart-large-cnn</code>
+      </div>
+      <h1 class="main-heading">
+        Smart Study Notes <span class="gradient-text">Generator</span>
+      </h1>
+      <p class="tagline">"Turn long text into clear, concise insights."</p>
+      <p class="sub-tagline">Paste your study material, textbook chapters, or academic articles to generate instant summaries, key study takeaways, and reduction statistics.</p>
+
+      <!-- Quick Test Preset Buttons -->
+      <div class="presets-wrapper">
+        <span class="presets-label">⚡ Teacher Evaluation Presets:</span>
+        <div class="preset-buttons">
+          <button type="button" class="preset-btn" id="btn-sample-ai">
+            🤖 Test 1: Artificial Intelligence
+          </button>
+          <button type="button" class="preset-btn" id="btn-sample-climate">
+            🌍 Test 2: Climate Change
+          </button>
+          <button type="button" class="preset-btn" id="btn-sample-education">
+            📚 Test 3: Online Education
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Input & Result Section -->
+    <section class="container app-grid">
+      <!-- Input Card -->
+      <div class="card input-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <h2>Input Study Material</h2>
+          </div>
+          <div class="counter-group">
+            <span class="counter-badge" id="word-count-badge">0 words</span>
+            <span class="counter-badge" id="char-count-badge">0 chars</span>
+          </div>
+        </div>
+
+        <div class="textarea-wrapper">
+          <textarea 
+            id="text-input" 
+            placeholder="Paste your paragraph or study material here (minimum 15-20 words). You can also click one of the quick test presets above to load college test cases instantly..."
+            rows="9"
+          ></textarea>
+        </div>
+
+        <!-- Alert Notification Box -->
+        <div id="alert-box" class="alert-box hidden">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span id="alert-message">Please enter some text to summarize.</span>
+        </div>
+
+        <div class="card-actions">
+          <button type="button" id="btn-clear" class="btn btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+            Clear Text
+          </button>
+          <button type="button" id="btn-paste" class="btn btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+            </svg>
+            Paste
+          </button>
+          <button type="button" id="btn-generate" class="btn btn-primary">
+            <span class="btn-text">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              Generate Notes
+            </span>
+            <span class="btn-loader hidden">
+              <span class="spinner"></span>
+              Synthesizing Notes...
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Card (Revealed on output) -->
+      <div class="card results-card" id="results-card">
+        <!-- Placeholder Empty State -->
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <h3>Awaiting Study Input</h3>
+          <p>Enter your paragraph on the left and click <strong>"Generate Notes"</strong> to view the AI summary, key study points, and reduction metrics.</p>
+        </div>
+
+        <!-- Populated Results Container -->
+        <div id="results-container" class="results-container hidden">
+          <!-- Statistics Section -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Original Words</div>
+              <div class="stat-value" id="stat-orig-words">0</div>
+              <div class="stat-meta">Input Length</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Summary Words</div>
+              <div class="stat-value" id="stat-summ-words">0</div>
+              <div class="stat-meta">Generated Abstract</div>
+            </div>
+            <div class="stat-card highlight-card">
+              <div class="stat-label">Text Reduced</div>
+              <div class="stat-value highlight-value" id="stat-reduction">0.00%</div>
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="reduction-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary Block -->
+          <div class="result-block">
+            <div class="result-block-header">
+              <div class="block-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+                <h3>Generated Summary</h3>
+                <span class="badge-mini">BART-Large-CNN</span>
+              </div>
+              <div class="block-actions">
+                <button type="button" class="action-btn" id="btn-tts" title="Read summary aloud">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                  </svg>
+                  Listen
+                </button>
+                <button type="button" class="action-btn" id="btn-copy-summary" title="Copy summary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                  </svg>
+                  Copy
+                </button>
+              </div>
+            </div>
+            <div class="summary-content" id="summary-text">
+              <!-- Summary will be inserted here -->
+            </div>
+          </div>
+
+          <!-- Key Points Block -->
+          <div class="result-block">
+            <div class="result-block-header">
+              <div class="block-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="21" y2="6"/>
+                  <line x1="8" y1="12" x2="21" y2="12"/>
+                  <line x1="8" y1="18" x2="21" y2="18"/>
+                  <line x1="3" y1="6" x2="3.01" y2="6"/>
+                  <line x1="3" y1="12" x2="3.01" y2="12"/>
+                  <line x1="3" y1="18" x2="3.01" y2="18"/>
+                </svg>
+                <h3>Salient Key Points</h3>
+                <span class="badge-mini">Study Takeaways</span>
+              </div>
+              <button type="button" class="action-btn" id="btn-copy-points" title="Copy key points">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <ul class="key-points-list" id="key-points-list">
+              <!-- Key points inserted dynamically -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Academic Metadata & Information Section -->
+    <section class="container info-section" id="about">
+      <div class="info-card">
+        <h3>🎓 Academic Project Specifications</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Project Title:</span>
+            <span class="info-val">Smart Study Notes Generator</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Product Name:</span>
+            <span class="info-val">TextifyAI</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Degree / Branch:</span>
+            <span class="info-val">MCA Generative AI</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Institution:</span>
+            <span class="info-val">SRM Institute of Science and Technology</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Pre-trained AI Model:</span>
+            <span class="info-val">Hugging Face Transformers (<code>facebook/bart-large-cnn</code>)</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Formula Used:</span>
+            <span class="info-val"><code>((Original Words - Summary Words) / Original Words) × 100</code></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>TextifyAI &copy; 2026. Individual Mini Project | MCA Generative AI, SRM Institute of Science and Technology.</p>
+      <div class="footer-links">
+        <a href="/slides" target="_blank">View 5-Slide Presentation</a>
+        <a href="https://huggingface.co/facebook/bart-large-cnn" target="_blank" rel="noopener">BART Model on Hugging Face</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/script.js"></script>
+</body>
+</html>
