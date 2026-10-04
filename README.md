@@ -3,15 +3,6 @@
 
 ---
 
-## 🎓 Academic Project Credentials
-- **Course / Program:** Master of Computer Applications (MCA)
-- **Specialization:** Generative AI
-- **Institution:** SRM Institute of Science and Technology
-- **Project Type:** Individual College Mini Project
-- **Model Architecture:** Pre-trained Sequence-to-Sequence Transformer (`facebook/bart-large-cnn`)
-
----
-
 ## 🎯 1. Aim
 To develop a small, production-ready Python web application that accepts a paragraph of study text from the user and automatically generates a short abstractive summary and a set of 3–5 salient key points using a pre-trained Generative AI model.
 
